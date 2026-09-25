@@ -1,20 +1,23 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Aurelia Solitaire</title>
-    <link rel="stylesheet" type="text/css" href="styles/reset.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.min.css" />
-    <link rel="stylesheet" type="text/css" href="styles/grid.css">
-    <link rel="stylesheet" type="text/css" href="styles/dragula.css">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'"
+    />
+    <meta
+      name="description"
+      content="Klondike Solitaire — the classic patience card game. Play with mouse, touch or keyboard."
+    />
+    <meta name="theme-color" content="#1a5e2e" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>Klondike Solitaire</title>
   </head>
-  <body aurelia-app="main">
-    <div class="splash">aurelia-solitaire</div>
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>
-      System.import('aurelia-bootstrapper');
-    </script>
+  <body>
+    <noscript>Klondike Solitaire needs JavaScript to run.</noscript>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

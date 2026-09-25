@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": ["env.d.ts", "src/domain/**/*.ts", "src/utils/**/*.ts"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": { "noEmit": true, "composite": false, "tsBuildInfoFile": null }
+}

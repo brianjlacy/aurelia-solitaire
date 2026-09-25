@@ -1,0 +1,9 @@
+dist
+dist-e2e
+coverage
+playwright-report
+test-results
+docs/api
+package-lock.json
+SPECIFICATION.md
+*.mp3

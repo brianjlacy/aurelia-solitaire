@@ -1,0 +1,15 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Klondike Solitaire",
+  "entryPoints": [
+    "src/domain/index.ts",
+    "src/utils/storage.ts",
+    "src/utils/random.ts",
+    "src/utils/eventBus.ts"
+  ],
+  "tsconfig": "tsconfig.docs.json",
+  "out": "docs/api",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "readme": "none"
+}

@@ -1,0 +1,19 @@
+{
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "include": [
+    "vite.config.*",
+    "vitest.config.*",
+    "playwright.config.*",
+    "eslint.config.*",
+    "tests/e2e/**/*"
+  ],
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
+    "lib": ["ES2023", "DOM"]
+  }
+}
