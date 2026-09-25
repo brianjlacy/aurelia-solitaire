@@ -34,6 +34,11 @@ export default defineConfigWithVueTs(
     },
   },
   {
+    name: 'app/scripts',
+    files: ['scripts/**'],
+    rules: { 'no-console': 'off' },
+  },
+  {
     name: 'app/tests',
     files: ['**/__tests__/**', 'tests/**'],
     rules: {

@@ -101,3 +101,11 @@ body {
     border: 1px solid ButtonText;
   }
 }
+
+@media (max-width: 480px) {
+  .btn {
+    min-height: 34px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8125rem;
+  }
+}
