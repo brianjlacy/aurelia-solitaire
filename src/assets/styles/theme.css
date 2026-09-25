@@ -1,0 +1,159 @@
+/*
+ * Design tokens. Themes are selected with data-theme on <html>
+ * (classic | dark | high-contrast); "system" resolves to classic or dark.
+ */
+:root,
+:root[data-theme='classic'] {
+  /* Table */
+  --table-bg: #1a5e2e;
+  --table-border: #0f3d1e;
+  --table-pattern: rgb(255 255 255 / 0.035);
+  --table-text: #f0fdf4;
+  --table-muted: #bbf7d0;
+  --slot-border: rgb(255 255 255 / 0.35);
+  --slot-bg: rgb(0 0 0 / 0.12);
+
+  /* Cards */
+  --card-bg: #ffffff;
+  --card-border: #d4d4d4;
+  --card-back: #2563eb;
+  --card-back-accent: #1d4ed8;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --card-shadow-strong: rgba(0, 0, 0, 0.35);
+
+  /* Suits */
+  --suit-red: #dc2626;
+  --suit-black: #1f2937;
+
+  /* Interactive states */
+  --drop-target-valid: rgba(34, 197, 94, 0.3);
+  --drop-target-valid-ring: #4ade80;
+  --drop-target-invalid: rgba(239, 68, 68, 0.3);
+  --drop-target-invalid-ring: #f87171;
+  --card-selected: rgba(59, 130, 246, 0.5);
+  --card-selected-ring: #60a5fa;
+  --hint-ring: #facc15;
+  --focus-ring: #fde047;
+
+  /* Chrome (header, dialogs) */
+  --surface-bg: #ffffff;
+  --surface-text: #111827;
+  --surface-muted: #4b5563;
+  --surface-border: #e5e7eb;
+  --header-bg: rgb(0 0 0 / 0.22);
+  --button-bg: rgb(255 255 255 / 0.12);
+  --button-bg-hover: rgb(255 255 255 / 0.22);
+  --button-text: #ffffff;
+  --accent: #15803d;
+  --accent-text: #ffffff;
+}
+
+:root[data-theme='dark'] {
+  --table-bg: #0f172a;
+  --table-border: #1e293b;
+  --table-pattern: rgb(255 255 255 / 0.025);
+  --table-text: #e2e8f0;
+  --table-muted: #94a3b8;
+  --slot-border: rgb(148 163 184 / 0.4);
+  --slot-bg: rgb(0 0 0 / 0.2);
+
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --card-back: #4f46e5;
+  --card-back-accent: #3730a3;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --card-shadow-strong: rgba(0, 0, 0, 0.6);
+
+  --suit-red: #f87171;
+  --suit-black: #e2e8f0;
+
+  --surface-bg: #1e293b;
+  --surface-text: #f1f5f9;
+  --surface-muted: #cbd5e1;
+  --surface-border: #334155;
+  --header-bg: rgb(15 23 42 / 0.85);
+  --accent: #4f46e5;
+}
+
+:root[data-theme='high-contrast'] {
+  --table-bg: #000000;
+  --table-border: #ffffff;
+  --table-pattern: transparent;
+  --table-text: #ffffff;
+  --table-muted: #ffffff;
+  --slot-border: #ffffff;
+  --slot-bg: transparent;
+
+  --card-bg: #ffffff;
+  --card-border: #000000;
+  --card-back: #000000;
+  --card-back-accent: #ffff00;
+  --card-shadow: transparent;
+  --card-shadow-strong: transparent;
+
+  --suit-red: #b00000;
+  --suit-black: #000000;
+
+  --drop-target-valid: rgba(0, 255, 0, 0.45);
+  --drop-target-valid-ring: #00ff00;
+  --drop-target-invalid-ring: #ff4040;
+  --card-selected-ring: #00ffff;
+  --hint-ring: #ffff00;
+  --focus-ring: #ffff00;
+
+  --surface-bg: #000000;
+  --surface-text: #ffffff;
+  --surface-muted: #ffffff;
+  --surface-border: #ffffff;
+  --header-bg: #000000;
+  --button-bg: #000000;
+  --button-bg-hover: #333333;
+  --button-text: #ffffff;
+  --accent: #ffff00;
+  --accent-text: #000000;
+}
+
+/* Card back colour choices */
+:root[data-card-back='red'] {
+  --card-back: #dc2626;
+  --card-back-accent: #991b1b;
+}
+:root[data-card-back='green'] {
+  --card-back: #059669;
+  --card-back-accent: #065f46;
+}
+:root[data-card-back='purple'] {
+  --card-back: #7c3aed;
+  --card-back-accent: #5b21b6;
+}
+:root[data-theme='high-contrast'][data-card-back] {
+  --card-back: #000000;
+  --card-back-accent: #ffff00;
+}
+
+/* Layout tokens */
+:root {
+  --pile-gap: clamp(4px, 1.2vw, 12px);
+  --board-padding: clamp(8px, 2vw, 24px);
+  --card-width: clamp(
+    40px,
+    calc((100vw - 2 * var(--board-padding) - 6 * var(--pile-gap)) / 7),
+    80px
+  );
+  --card-height: calc(var(--card-width) * 1.4);
+  --card-radius: clamp(4px, calc(var(--card-width) * 0.1), 8px);
+  --tableau-fan-offset: calc(var(--card-height) * 0.22);
+  --tableau-fan-offset-hidden: calc(var(--card-height) * 0.09);
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --card-width: 96px;
+  }
+}
+
+@media (min-width: 1280px) and (max-height: 820px) {
+  :root {
+    --card-width: 80px;
+  }
+}

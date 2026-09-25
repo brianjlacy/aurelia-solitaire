@@ -1,0 +1,294 @@
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.card {
+  position: absolute;
+  left: 0;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--card-radius);
+  box-shadow:
+    0 1px 2px var(--card-shadow),
+    0 1px 1px var(--card-shadow);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition:
+    box-shadow 0.15s,
+    opacity 0.15s,
+    translate 0.15s;
+}
+
+.card--interactive {
+  cursor: grab;
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 1px;
+  z-index: 500;
+}
+
+.card--selected {
+  box-shadow:
+    0 0 0 3px var(--card-selected-ring),
+    0 6px 14px var(--card-shadow-strong);
+  translate: 0 -3px;
+}
+
+.card--hint {
+  box-shadow:
+    0 0 0 3px var(--hint-ring),
+    0 0 14px var(--hint-ring);
+}
+
+.card--dragging {
+  opacity: 0.35;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.card-front {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--suit-black);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.card-front.suit-hearts,
+.card-front.suit-diamonds {
+  color: var(--suit-red);
+}
+
+.card-corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  font-size: calc(var(--card-width) * 0.21);
+  letter-spacing: -0.04em;
+}
+.card-corner--top {
+  top: calc(var(--card-width) * 0.05);
+  left: calc(var(--card-width) * 0.06);
+}
+.card-corner--bottom {
+  bottom: calc(var(--card-width) * 0.05);
+  right: calc(var(--card-width) * 0.06);
+  rotate: 180deg;
+}
+.card-corner .card-suit {
+  font-size: 0.85em;
+}
+
+.card-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: calc(var(--card-width) * 0.5);
+  font-weight: 400;
+}
+.card-center--face {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: calc(var(--card-width) * 0.44);
+}
+.card-center--face .card-center-suit {
+  position: absolute;
+  font-size: 0.45em;
+  translate: 0 1.15em;
+}
+
+/* Narrow cards: keep only the corner index legible. */
+@media (max-width: 480px) {
+  .card-corner {
+    font-size: calc(var(--card-width) * 0.3);
+  }
+  .card-corner--bottom {
+    display: none;
+  }
+  .card-center {
+    font-size: calc(var(--card-width) * 0.46);
+    padding-top: 30%;
+  }
+  .card-center--face .card-center-suit {
+    display: none;
+  }
+}
+
+.card-back {
+  border: calc(var(--card-width) * 0.05) solid #fff;
+  background-color: var(--card-back);
+  background-image:
+    repeating-linear-gradient(45deg, var(--card-back-accent) 0 3px, transparent 3px 9px),
+    repeating-linear-gradient(-45deg, var(--card-back-accent) 0 3px, transparent 3px 9px);
+}
+
+:root[data-theme='dark'] .card-back {
+  border-color: #cbd5e1;
+}
+:root[data-theme='high-contrast'] .card-back {
+  border-color: #ffffff;
+  outline: 2px solid #000;
+}
+
+/* ── Piles ────────────────────────────────────────────────────────────── */
+.pile {
+  position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+}
+
+.pile-slot {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--slot-border);
+  border-radius: var(--card-radius);
+  background: var(--slot-bg);
+  color: var(--table-muted);
+  font-size: calc(var(--card-width) * 0.42);
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+button.pile-slot {
+  cursor: pointer;
+  padding: 0;
+}
+
+.pile--drop-valid .pile-slot,
+.pile--drop-valid.tableau-pile::after {
+  background: var(--drop-target-valid);
+  border-color: var(--drop-target-valid-ring);
+  border-style: solid;
+}
+
+.pile--drop-invalid .pile-slot,
+.pile--drop-invalid.tableau-pile::after {
+  background: var(--drop-target-invalid);
+  border-color: var(--drop-target-invalid-ring);
+  border-style: solid;
+}
+
+.pile--target .pile-slot,
+.pile--target.tableau-pile::after {
+  border-color: var(--drop-target-valid-ring);
+  border-style: solid;
+}
+
+.tableau-pile {
+  min-height: calc(var(--card-height) + var(--tableau-fan-offset) * 2);
+}
+
+.tableau-pile::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 2px solid transparent;
+  border-radius: calc(var(--card-radius) + 4px);
+  pointer-events: none;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+.stock-pile .pile-slot {
+  font-size: calc(var(--card-width) * 0.36);
+}
+
+.stock-button {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--card-radius);
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.stock-stack {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  box-shadow:
+    1px 1px 0 var(--card-shadow-strong),
+    2px 2px 0 var(--card-shadow),
+    3px 3px 0 var(--card-shadow-strong);
+}
+
+.stock-count {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  min-width: 22px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.65);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Ghost layer for dragged cards */
+.drag-layer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1500;
+  pointer-events: none;
+  will-change: transform;
+}
+.drag-layer--returning {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.drag-layer .card {
+  box-shadow: 0 12px 24px var(--card-shadow-strong);
+}
+.drag-layer--invalid .card:first-child {
+  box-shadow:
+    0 0 0 3px var(--drop-target-invalid-ring),
+    0 12px 24px var(--card-shadow-strong);
+}
+.drag-layer--valid .card:first-child {
+  box-shadow:
+    0 0 0 3px var(--drop-target-valid-ring),
+    0 12px 24px var(--card-shadow-strong);
+}
+
+body.is-dragging,
+body.is-dragging * {
+  cursor: grabbing !important;
+}
+body.is-dragging.is-over-invalid,
+body.is-dragging.is-over-invalid * {
+  cursor: no-drop !important;
+}
+
+@media (forced-colors: active) {
+  .card-front,
+  .pile-slot {
+    border: 1px solid CanvasText;
+  }
+  .card-back {
+    background: GrayText;
+    forced-color-adjust: none;
+  }
+  .card--selected,
+  .card--hint {
+    outline: 3px solid Highlight;
+  }
+}

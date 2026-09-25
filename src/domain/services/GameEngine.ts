@@ -204,3 +204,41 @@ export function listLegalMoves(state: GameState, rules: SolitaireRules = klondik
   }
   return moves
 }
+
+/** Where a card currently sits on the table. */
+export interface CardPosition {
+  readonly location: PileLocation
+  readonly index: number
+}
+
+/** Finds a card by id, or returns `null` if it is not on the table. */
+export function locateCard(state: GameState, cardId: string): CardPosition | null {
+  const piles: [PileLocation, PileCards][] = [
+    [Locations.stock(), state.stock],
+    [Locations.waste(), state.waste],
+    ...state.foundations.map((p, i): [PileLocation, PileCards] => [Locations.foundation(i), p]),
+    ...state.tableau.map((p, i): [PileLocation, PileCards] => [Locations.tableau(i), p]),
+  ]
+  for (const [location, pile] of piles) {
+    const index = pile.findIndex((p) => p.card.id === cardId)
+    if (index !== -1) return { location, index }
+  }
+  return null
+}
+
+/**
+ * Whether the card at `index` of `location` may be picked up: a face-up
+ * tableau card heading a valid run, or the top card of the waste or a foundation.
+ */
+export function canPickUp(
+  state: GameState,
+  location: PileLocation,
+  index: number,
+  rules: SolitaireRules = klondikeRules,
+): boolean {
+  if (state.status === 'won' || location.type === 'stock') return false
+  const pile = pileAt(state, location)
+  if (!pile || !pile[index]) return false
+  if (location.type !== 'tableau') return index === pile.length - 1
+  return rules.isMovableSequence(pile.slice(index))
+}

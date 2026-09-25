@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   autoMoveToFoundation,
   canAutoComplete,
+  canPickUp,
+  locateCard,
   canDraw,
   draw,
   findFoundationMove,
@@ -221,5 +223,46 @@ describe('invariants (randomised play)', () => {
         })
       }
     }
+  })
+})
+
+describe('locateCard', () => {
+  it('finds cards in any pile', () => {
+    const state = layout({
+      stock: 'AH',
+      waste: '2H',
+      foundationRanks: [0, 1, 0, 0],
+      tableau: ['', '5S 4H'],
+    })
+    expect(locateCard(state, 'hearts-1')).toEqual({ location: Locations.stock(), index: 0 })
+    expect(locateCard(state, 'hearts-2')).toEqual({ location: Locations.waste(), index: 0 })
+    expect(locateCard(state, 'diamonds-1')).toEqual({ location: F(1), index: 0 })
+    expect(locateCard(state, 'hearts-4')).toEqual({ location: T(1), index: 1 })
+    expect(locateCard(state, 'clubs-9')).toBeNull()
+  })
+})
+
+describe('canPickUp', () => {
+  const state = layout({
+    stock: 'AH',
+    waste: '2H 3C',
+    foundationRanks: [0, 1, 0, 0],
+    tableau: ['#9D 5S 4H', '8C 3D'],
+  })
+  it('allows runs and top cards', () => {
+    expect(canPickUp(state, T(0), 1)).toBe(true)
+    expect(canPickUp(state, T(0), 2)).toBe(true)
+    expect(canPickUp(state, Locations.waste(), 1)).toBe(true)
+    expect(canPickUp(state, F(1), 0)).toBe(true)
+  })
+
+  it('rejects everything else', () => {
+    expect(canPickUp(state, T(0), 0)).toBe(false)
+    expect(canPickUp(state, T(1), 0)).toBe(false)
+    expect(canPickUp(state, T(0), 5)).toBe(false)
+    expect(canPickUp(state, T(9), 0)).toBe(false)
+    expect(canPickUp(state, Locations.waste(), 0)).toBe(false)
+    expect(canPickUp(state, Locations.stock(), 0)).toBe(false)
+    expect(canPickUp({ ...state, status: 'won' }, T(0), 2)).toBe(false)
   })
 })

@@ -29,6 +29,8 @@ export default defineConfigWithVueTs(
       'vue/define-macros-order': 'error',
       'vue/block-lang': ['error', { script: { lang: 'ts' } }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // Nesting a control inside its <label> is a valid association.
+      'vuejs-accessibility/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
     },
   },
   {
